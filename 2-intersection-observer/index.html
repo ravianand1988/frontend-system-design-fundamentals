@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Intersection Observer -- Frontend System Design Fundamentals</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <template id="cardTemplate">
+        <article class="card">
+            <h3></h3>
+            <div class="card__body">
+                <div class='card__body__image'></div>
+                <section class='card__body__content'>
+                </section>
+            </div>
+        </article>
+    </template>
+</head>
+<body>
+<main id="container" class="container">
+  <div id="list"></div>
+  <div id="bottomObserver">
+    Bottom observer test..
+  </div>
+</main>
+<script type="module">
+  // Running the file using path throws CORS. Solution: Run the project using `npx serve`
+  // then Access the file on running port. i.e.: localhost:3000/2-intersection-observer
+  import { initMockDB } from "../../utils/db.js"
+
+  const [
+    template,
+    list,
+    observerElement
+  ] = document.querySelectorAll('#cardTemplate, #list, #bottomObserver')
+
+  const db = initMockDB({
+    title: "Fundamentals of Frontend System Design",
+    body: "Learning to use intersection observer..."
+  })
+
+    function createCardElement(title, body) {
+        const element = template.content.cloneNode(true).firstElementChild;
+        const [cardTitle, cardBody] = document.querySelectorAll(
+          '.card__title, .card__body__content'
+        );
+        [cardTitle.textContent, cardBody.textContent] = [title, body];
+        return element;
+    }
+
+    /**
+     * Exercise - Intersection observer
+     * 1. Create Intersection observer instance and provide a callback to it
+     * 2. In the callback use mock db - next function is to get the next chunk of data
+     * 3. Create a fragment where you  chunk all your DOM Mutations
+     * 4. Update fragment
+     * 5. Append fragment to "list" container
+     */
+    const observer = null;
+</script>
+</body>
+</html>

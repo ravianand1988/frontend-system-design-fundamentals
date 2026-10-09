@@ -29,6 +29,7 @@ about HTML `<template></template>` tag and it's benefits.
 
 ## Results
 
+- This could be used to without template using innerHTMl or other traditional way. for example, keeping card HTML template as string in JS and replace the title and body using `.replace()`. However, costs are triggering reflow a bunch of times that leads to performance eventually.
 - A function is there to create a new card element with optimized strategy using template tag.
 - Learned about `<template>` tag in HTML and practiced dealing with the same in JS.
 - One CSS trade-off is b/w `border-box` and `content-box`

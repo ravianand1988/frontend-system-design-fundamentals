@@ -34,3 +34,7 @@ about HTML `<template></template>` tag and it's benefits.
 - One CSS trade-off is b/w `border-box` and `content-box`
   - CSS by defaults sets the `box-sizing: content-box`for the historical and backward compatibility reasons.
   - `content-box` has the behavior to take the full size + given padding and border. Therefore, if the content-box size is 200px and padding 10px and border 5 px. that adds up total as 215px in the page. Whereas `border-box` keeps the size within, i.e. div with 200px width and height + 10px padding + 5px border will take only 200 px in the page. The actual space for the div will be (200 - 10 - 5) = 185px. That helps the developers to calculate the styles precisely.
+
+## Sample output
+
+![Image Alt Sample output](./1-dom-demo.png)

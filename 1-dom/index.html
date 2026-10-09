@@ -5,34 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Frontend System Design Fundamentals</title>
   <link rel="stylesheet" href="./index.css">
+  <template id="cardTemplate">
+    <article class="card">
+      <h3 class="card__title"></h3>
+      <div class="card__body">
+        <div class="card__body__image"></div>
+        <section class="card__body__content"></section>
+      </div>
+    </article>
+  </template>
 </head>
 <body>
   <main id="containerRoot" class="container">
-    hello there..
   </main>
 </body>
 <script>
   const containerRoot = document.getElementById('containerRoot');
-  const html = `<article class="card">
-      <h3 class="card__title"></h3>
-      <div class="card__body">
-        <div class="card__body__image"></div>
-        <section class="card__body__content">
-        </section>
-      </div>
-    </article>`
 
   /**
-   * @todo - Implement function
+   * A function to create a new card from a predefined HTML template in
+   * memory using `<template>` tag. This tag is not attached/included/loaded
+   * in DOM. Therefore, does not trigger `reflow` operation in browser and
+   * keeps the performance optimized. It runs only the reflow when element is
+   * appended/inserted to the DOM at last using `.append(), insertAdjacent..()`
    */
   function createCardComponent(title, body) {
+    const template = document.getElementById('cardTemplate');
+    const elementCard = template.content.cloneNode(true).firstElementChild;
+    const [cardTitle] = elementCard.getElementsByTagName('h3');;
+    const [cardBody] = elementCard.getElementsByTagName('section');
+
+    [cardTitle.textContent, cardBody.textContent] = [title, body];
+    return elementCard;
   }
 
-  const component = createCardComponent(
+  containerRoot.appendChild(createCardComponent(
     'Frontend System Design: Fundamentals',
     'This is a random body text...'
-  );
-
-  containerRoot.appendChild(component);
+  ));
+  containerRoot.appendChild(createCardComponent(
+    'Frontend System Design: Fundamentals',
+    'This is a random body text...'
+  ));
 </script>
 </html>

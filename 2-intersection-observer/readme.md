@@ -18,3 +18,11 @@ The mental map
 ## Actions
 
 ## Result
+
+## Sample output
+
+### Begin:
+
+![image Alt ](./2-intersection-observer-begin.png)
+
+### End:

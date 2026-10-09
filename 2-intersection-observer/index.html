@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../styles/index.css">
     <template id="cardTemplate">
         <article class="card">
-            <h3></h3>
+            <h3 class="card__title"></h3>
             <div class="card__body">
                 <div class='card__body__image'></div>
                 <section class='card__body__content'>
@@ -40,9 +40,9 @@
 
     function createCardElement(title, body) {
         const element = template.content.cloneNode(true).firstElementChild;
-        const [cardTitle, cardBody] = document.querySelectorAll(
-          '.card__title, .card__body__content'
-        );
+        const [cardTitle, cardBody] = element.querySelectorAll('.card__title, .card__body__content');
+        console.log(cardTitle);
+        console.log(cardBody);
         [cardTitle.textContent, cardBody.textContent] = [title, body];
         return element;
     }
@@ -55,7 +55,24 @@
      * 4. Update fragment
      * 5. Append fragment to "list" container
      */
-    const observer = null;
+    let page = 0;
+    const observer = new IntersectionObserver(async ([entry]) => {
+      if(entry.isIntersecting) {
+        const data = await db.getPage(page++);
+        console.log(data);
+        const fragment = new DocumentFragment();
+        data.forEach(({title, body}) => {
+          const card = createCardElement(title, body);
+          fragment.appendChild(card);
+          console.log('fragment: ', fragment);
+        });
+        list.appendChild(fragment);
+      }
+    }, {
+      threshold: 0.2
+    });
+
+    observer.observe(observerElement);
 </script>
 </body>
 </html>

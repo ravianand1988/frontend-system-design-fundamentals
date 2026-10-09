@@ -23,6 +23,8 @@ The mental map
 
 ### Begin:
 
-![image Alt ](./2-intersection-observer-begin.png)
+![image Alt Intersection observer begin](./2-intersection-observer-begin.png)
 
 ### End:
+
+![image Alt Intersection observer result](./2-intersection-observer-result.png)

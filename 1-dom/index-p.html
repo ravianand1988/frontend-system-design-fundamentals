@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./index-p.css">
+  <template id="templateCard">
+    <article class="card">
+      <h3 class="card__title"></h3>
+      <div class="card__body">
+        <div class="card__body__image"></div>
+        <section class="card__body__content">
+        </section>
+      </div>
+    </article>
+  </template>
+</head>
+<body>
+  <main id="container" class="container">
+  </main>
+</body>
+<script>
+  const containerMain = document.getElementById('container');
+
+  function createCardComponent(title, body) {
+    const template = document.getElementById('templateCard');
+    const myCard = template.content.cloneNode(true).firstElementChild;
+    console.log(myCard);
+    const [titleE] = myCard.getElementsByTagName('h3');
+    const [bodyE] = myCard.getElementsByTagName('section');
+    titleE.textContent = title;
+    bodyE.textContent = body;
+    return myCard;
+  }
+
+  containerMain.appendChild(createCardComponent(
+    'Practicing Frontend system design',
+    'Some random card text.. Ved understands a lot..'
+  ));
+  containerMain.appendChild(createCardComponent(
+    'Practicing Frontend system design',
+    'Some random card text.. Ved understands a lot..'
+  ));
+</script>
+</html>

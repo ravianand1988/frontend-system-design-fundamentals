@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.card {
+  margin: 2rem;
+  padding: 1.5rem 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19);
+}
+
+.card__body {
+  display: flex;
+  flex-direction: row;
+}
+
+.card__body__image {
+  width: 128px;
+  height: 128px;
+  border-radius: 100%;
+  flex-shrink: 0;
+  margin: 1rem;
+  background: salmon;
+}
+
+.card__body__content {
+  padding: 0 1rem;
+}

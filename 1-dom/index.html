@@ -32,6 +32,9 @@
   function createCardComponent(title, body) {
     const template = document.getElementById('cardTemplate');
     const elementCard = template.content.cloneNode(true).firstElementChild;
+    // Other technique to fetch elements
+    // const [cT, cB] = document.querySelectorAll('.card__title, .card__body__content');
+    // console.log(cT, cB);
     const [cardTitle] = elementCard.getElementsByTagName('h3');;
     const [cardBody] = elementCard.getElementsByTagName('section');
 

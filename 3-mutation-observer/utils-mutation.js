@@ -25,4 +25,47 @@ function getHeading(node) {
   return element;
 }
 
-export { createCardElement, getHeading };
+function getMarkdown(node) {
+  console.log("node: ", node);
+  let elem = node;
+  const hashText = node.textContent;
+  let newText = "";
+  if (hashText.startsWith("#")) {
+    console.log("hash text: ", hashText);
+    const trimmedText = hashText.trim();
+    console.log("trimmed: ", trimmedText);
+    switch (trimmedText) {
+      case "#":
+        elem = document.createElement("h1");
+        newText = node.textContent.slice(2);
+        break;
+      case "##":
+        elem = document.createElement("h2");
+        newText = node.textContent.slice(3);
+        break;
+      case "###":
+        elem = document.createElement("h3");
+        newText = node.textContent.slice(2);
+        break;
+    }
+  }
+
+  elem.textContent = newText;
+  elem.setAttribute("contenteditable", true);
+  elem.textContent = elem.textContent === "" ? " test" : elem.textContent;
+  return elem;
+}
+
+// : (...args: any[]) => void
+function debounce(fun, delay) {
+  let timeoutId = null;
+  return (...args) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => fun(...args), delay);
+  };
+}
+
+export { createCardElement, debounce, getHeading, getMarkdown };

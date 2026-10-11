@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Github like text editor -- Frontend System Design Fundamentals</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <template id="cardTemplate">
+        <article class="card">
+            <h3 class="card__title"></h3>
+            <p contenteditable="true">Hello.., edit me..</p>
+            <div class="card__body">
+                <div class='card__body__image'></div>
+                <section class='card__body__content' contenteditable="true">
+                </section>
+            </div>
+        </article>
+    </template>
+</head>
+<body>
+<main id="container" class="container">
+  <article id="cardMD" class="card">
+      <h3 class="card__title">Write markdown.. <span> That will be converted to preview format </span></h3>
+      <div class="card__body">
+          <label for="story">
+            Tell us your story
+          </label>
+          <textarea name="story" id="story" rows="5" cols="80"></textarea>
+      </div>
+  </article>
+  <article id="cardMDPreview" class="card">
+      <h3 class="card__title">Write markdown.. <span> That will be converted to preview format </span></h3>
+      <div class="card__body">
+          <section class='card__body__content' contenteditable="true">
+
+          </section>
+      </div>
+  </article>
+</main>
+<script type="module">
+  // Running the file using path throws CORS. Solution: Run the project using `npx serve`
+  // then Access the file on running port. i.e.: localhost:3000/2-mutation-observer
+  import { getMarkdown, debounce } from "./utils-mutation.js";
+
+  const SUPPORTED_ELEMENTS = new Set([
+    '#',
+    '##',
+    '###',
+    '-',
+    '1.',
+    '_',
+    '**'
+  ]);
+
+    /**
+     * Exercise - Mutation observer
+     * 1. Loop through mutations (first arg callback)
+     * 2. use mutation.type === 'characterData'
+     * 3. When the content matches with any supported tag in SUPPORTED_ELEMENTS
+     *    use getHeading function to convert text to HTMLHeading element
+     * 4. Replace the node with a newly created node
+     * 5. Keep focus on the element
+     */
+    const mutationObserver = new MutationObserver((mutations) => {
+      for (const { target, type } of mutations) {
+        if (type === "attributes") {
+          console.log(`Attribute '${mutation.attributeName}' changed.`);
+          console.log(`Old value: ${mutation.oldValue}`);
+          console.log(`New value: ${mutation.target.getAttribute(mutation.attributeName)}`);
+          // const element = getMarkdown(target);
+          // target.replaceWith(element);
+          // element.focus();
+        }
+      }
+    });
+
+    const logChanges = (event) => {
+      console.log('user stopped typing. Saved value: ', event.target.value);
+    }
+
+
+  function watchChanges() {
+    const target = document.getElementById('story');
+    target.addEventListener('input', debounce(logChanges, 3000));
+  }
+
+  watchChanges();
+
+  function observeMarkDownElement() {
+    const target = document.getElementById('story');
+    console.log('target :', target);
+    mutationObserver.observe(target, { attributes: true, attributeOldValue: true, attributeFilter: ['value', 'disabled', 'readonly', 'rows'] })
+  }
+
+  observeMarkDownElement();
+</script>
+</body>
+</html>

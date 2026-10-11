@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/index.css">
+  <template id="templateCard">
+    <article class="card">
+      <h3 class="card__title"></h3>
+      <div class="card__body">
+        <div class="card__body__image"></div>
+        <section class="card__body__content"></section>
+      </div>
+    </article>
+  </template>
+</head>
+<body>
+  <main id="container" class="container">
+    <div id="list"></div>
+    <div id="bottomObserver" class="observer"></div>
+  </main>
+</body>
+<script type="module">
+  import { initMockDB } from "../../utils/db.js";
+  const [templateCard, list, observer] = document.querySelectorAll('#templateCard, #list, #bottomObserver')
+
+  const db = initMockDB({
+    title: 'Ved',
+    body: 'He is eating a little more than usual. Happy, playing around...'
+  });
+
+  function createCardComp(title, body) {
+    const cardElem = templateCard.content.cloneNode(true).firstElementChild;
+    console.log('cardElem', cardElem);
+    const [cTitle, cBody] = cardElem.querySelectorAll('.card__title, .card__body__content');
+    [cTitle.textContent, cBody.textContent] = [title, body];
+    return cardElem;
+  }
+
+  let count = 0;
+  let page = 0;
+  const bottomObserver = new IntersectionObserver(async([entry]) => {
+    if (entry.isIntersecting) {
+      console.log(entry);
+      const data = await db.getPage(page++);
+      const documentFragment = new DocumentFragment();
+      console.log('data ', data);
+
+      data.forEach((item) => {
+        documentFragment.appendChild(createCardComp(item.title, item.body));
+      });
+      // for (let i = count; i < (count + 10); i++) {
+      //   const card = createCardComp(`Ved [${i}]`, 'He is happy and playing around..');
+      //   documentFragment.appendChild(card);
+      // }
+        list.appendChild(documentFragment);
+      count += 10;
+    }
+  }, { threshold: 0.2 });
+
+  bottomObserver.observe(observer);
+</script>
+</html>

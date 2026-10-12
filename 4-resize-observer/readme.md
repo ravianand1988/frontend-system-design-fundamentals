@@ -40,8 +40,8 @@ As a result we will have a div with four boxes with the ability to resize their 
 
 ### Begin:
 
-![image Alt Intersection observer begin](./2-intersection-observer-begin.png)
+![image Alt Intersection observer begin](./4-resize-observer-begin.png)
 
 ### End:
 
-![image Alt Intersection observer result](./2-intersection-observer-result.png)
+![image Alt Intersection observer result](./4-resize-observer-result.png)

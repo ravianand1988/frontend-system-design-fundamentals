@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resize observer -- Frontend System Design</title>
+  <link rel="stylesheet" href="../4-resize-observer/index.css">
+</head>
+<body>
+  <main id="container" class="container">
+    <div id="boxA" class="box">A</div>
+    <div id="boxB" class="box">B</div>
+    <div id="boxC" class="box">C</div>
+    <div id="boxD" class="box">D</div>
+  </main>
+</body>
+<script type="module">
+  /**
+   * 1. Initiate Resize observer
+   * 2. Implement callback - use inlineSize and blockSize of the entries for the width and height
+   * 3. If width and height is less than 150px
+   *   3.1 - Apply border-radius: 100%
+   *   3.2 - Apply border-width: 4px
+   * 4. If width and height is more than 150px = unset the properties above
+   * 5. All 4 boxes should use same observer
+   */
+  const resizeObserver = new ResizeObserver((entries) => {
+    for (let entry of entries) {
+      const { borderBoxSize: [{ inlineSize, blockSize }], target } = entry;
+      const existingBackground = window.getComputedStyle(target).backgroundColor;
+      console.log(`inline size: ${inlineSize}   block size: ${blockSize}`);
+      console.log(`Existing background: ${existingBackground}`);
+      console.log('box id: ', target.id);
+
+
+      if (inlineSize < 150 && blockSize < 150) {
+        target.style.borderRadius = '100%';
+        target.style.borderWidth = '4px';
+        target.style.backgroundColor = 'salmon';
+      } else {
+        target.style.borderRadius = 'unset';
+        target.style.borderWidth = 'unset';
+        switch (target.id) {
+          case 'boxA':
+            target.style.background = 'rgba(0, 255, 0, 0.5)';
+            break;
+          case 'boxB':
+            target.style.background = 'rgba(255, 255, 0, 0.5)';
+            break;
+          case 'boxC':
+            target.style.background = 'rgba(255, 0, 0, 0.5)';
+            break;
+          case 'boxD':
+            target.style.background = 'rgba(0, 0, 255, 0.5)';
+            break;
+        }
+      }
+    }
+  });
+
+  const targets = document.querySelectorAll('.box');
+  targets.forEach(target => resizeObserver.observe(target));
+</script>
+</html>
